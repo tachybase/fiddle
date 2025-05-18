@@ -97,8 +97,7 @@ const config: ForgeConfig = {
       OriginalFilename: 'Electron Fiddle',
     },
     osxSign: {
-      identity:
-        'Developer ID Application: OpenJS Foundation, Inc. (UY52UFTVTM)',
+      identity: 'Apple Development: Lin Zhang (VBZ6Z2VM5L)',
       optionsForFile: (filePath) =>
         ['(Plugin).app', '(GPU).app', '(Renderer).app'].some((helper) =>
           filePath.includes(helper),
