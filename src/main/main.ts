@@ -24,12 +24,12 @@ import { shouldQuit } from './squirrel';
 import { setupTemplates } from './templates';
 import { setupThemes } from './themes';
 import { setupUpdates } from './update';
+import { IpcEvents } from '../ipc-events';
 import { isDevMode } from './utils/devmode';
 import { getProjectName } from './utils/get-project-name';
 import { getUsername } from './utils/get-username';
 import { setupVersions } from './versions';
 import { getOrCreateMainWindow, mainIsReady } from './windows';
-import { IpcEvents } from '../ipc-events';
 
 let argv: string[] = [];
 
