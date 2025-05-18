@@ -6,8 +6,8 @@ import {
 } from 'electron';
 
 import { ipcMainManager } from './ipc';
-import { IpcEvents } from '../ipc-events';
 import { isDevMode } from './utils/devmode';
+import { IpcEvents } from '../ipc-events';
 
 /**
  * Returns items related to running the current fiddle.

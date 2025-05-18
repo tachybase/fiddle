@@ -2,6 +2,7 @@ import semver from 'semver';
 
 import { Bisector } from './bisect';
 import { AppState } from './state';
+import { maybePlural } from './utils/plural-maybe';
 import {
   FileTransformOperation,
   InstallState,
@@ -11,7 +12,6 @@ import {
   RunResult,
   RunnableVersion,
 } from '../interfaces';
-import { maybePlural } from './utils/plural-maybe';
 
 const parseEnvString = require('parse-env-string');
 

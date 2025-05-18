@@ -5,10 +5,10 @@ import * as fs from 'fs-extra';
 import * as tmp from 'tmp';
 
 import { ipcMainManager } from './ipc';
-import { Files } from '../interfaces';
-import { IpcEvents } from '../ipc-events';
 import { getFiles } from './utils/get-files';
 import { readFiddle } from './utils/read-fiddle';
+import { Files } from '../interfaces';
+import { IpcEvents } from '../ipc-events';
 import { isSupportedFile } from '../utils/editor-utils';
 
 /**

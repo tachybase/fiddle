@@ -3,9 +3,9 @@ import * as path from 'node:path';
 import { IpcMainEvent, shell } from 'electron';
 
 import { ipcMainManager } from './ipc';
+import { exec } from './utils/exec';
 import { IPackageManager, PMOperationOptions } from '../interfaces';
 import { IpcEvents } from '../ipc-events';
-import { exec } from './utils/exec';
 
 let isNpmInstalled: boolean | null = null;
 let isYarnInstalled: boolean | null = null;
