@@ -1,4 +1,3 @@
-import { normalizeVersion } from './utils/normalize-version';
 import {
   ElectronReleaseChannel,
   GlobalSetting,
@@ -8,6 +7,7 @@ import {
   VersionSource,
   WindowSpecificSetting,
 } from '../interfaces';
+import { normalizeVersion } from './utils/normalize-version';
 
 /**
  * Returns a sensible default version string.

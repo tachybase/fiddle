@@ -2,6 +2,7 @@ import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import * as MonacoType from 'monaco-editor';
 import { MosaicDirection, MosaicNode, getLeaves } from 'react-mosaic-component';
 
+import { EditorId, EditorValues, PACKAGE_NAME } from '../interfaces';
 import {
   compareEditors,
   getEmptyContent,
@@ -9,7 +10,6 @@ import {
   isSupportedFile,
   monacoLanguage,
 } from './utils/editor-utils';
-import { EditorId, EditorValues, PACKAGE_NAME } from '../interfaces';
 
 export type Editor = MonacoType.editor.IStandaloneCodeEditor;
 
