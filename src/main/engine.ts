@@ -40,6 +40,7 @@ export class TachybaseEngine {
 
     await checkRunning();
 
+    // TODO: fix env
     delete env['NODE'];
     delete env['NODE_PATH'];
     const child = spawn(enginePath, ['start'], {
