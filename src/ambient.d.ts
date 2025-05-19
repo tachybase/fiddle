@@ -50,6 +50,16 @@ declare global {
         options?: { signal: AbortSignal },
       ): void;
       addEventListener(
+        type: 'engine-started',
+        listener: (commandId: string) => void,
+        options?: { signal: AbortSignal },
+      ): void;
+      addEventListener(
+        type: 'engine-ready',
+        listener: (commandId: string) => void,
+        options?: { signal: AbortSignal },
+      ): void;
+      addEventListener(
         type: 'fiddle-runner-output',
         listener: (output: string) => void,
       ): void;

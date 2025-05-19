@@ -49,6 +49,8 @@ const channelMapping: Record<FiddleEvent, IpcEvents> = {
   'undo-in-editor': IpcEvents.UNDO_IN_EDITOR,
   'version-download-progress': IpcEvents.VERSION_DOWNLOAD_PROGRESS,
   'version-state-changed': IpcEvents.VERSION_STATE_CHANGED,
+  'engine-ready': IpcEvents.ENGINE_READY,
+  'engine-started': IpcEvents.ENGINE_STARTED,
 } as const;
 
 async function preload() {

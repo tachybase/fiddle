@@ -173,6 +173,8 @@ export interface SelectedLocalVersion {
 
 export type FiddleEvent =
   | 'before-quit'
+  | 'engine-ready'
+  | 'engine-started'
   | 'bisect-task'
   | 'clear-console'
   | 'electron-types-changed'
