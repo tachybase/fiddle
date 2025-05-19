@@ -29,7 +29,7 @@
     "postinstall": "husky && npm run electron-releases"
   },
   "engines": {
-    "node": ">= 20.10.0"
+    "node": ">= 20.18.0"
   },
   "keywords": [
     "Electron",
