@@ -1,5 +1,10 @@
 // Remember to update ambient.d.ts for extending window object
-import { IpcRendererEvent, contextBridge, ipcRenderer } from 'electron';
+import {
+  IpcRendererEvent,
+  contextBridge,
+  ipcRenderer,
+  webUtils,
+} from 'electron';
 
 import {
   BlockableAccelerator,
@@ -190,6 +195,7 @@ export async function setupFiddleGlobal() {
         command,
       );
     },
+    getPathForFile: (file: File) => webUtils.getPathForFile(file),
     pathExists: (path: string) =>
       ipcRenderer.sendSync(IpcEvents.PATH_EXISTS, path),
     platform: process.platform,

@@ -120,7 +120,10 @@ export const AddThemeDialog = observer(
       const inputProps = { accept: '.json' };
       const { file } = this.state;
 
-      const text = file && file.path ? file.path : `Select the Monaco file...`;
+      const text =
+        file && window.ElectronFiddle.getPathForFile(file)
+          ? window.ElectronFiddle.getPathForFile(file)
+          : `Select the Monaco file...`;
       return (
         <Dialog
           isOpen={isThemeDialogShowing}

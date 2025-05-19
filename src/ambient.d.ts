@@ -147,6 +147,7 @@ declare global {
       getReleasedVersions(): Array<Version>;
       getUsername(): string;
       getVersionState(version: string): InstallState;
+      getPathForFile(file: File): string;
       isDevMode: boolean;
       isReleasedMajor(major: number): Promise<boolean>;
       macTitlebarClicked(): void;
