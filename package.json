@@ -1,11 +1,11 @@
 {
-  "name": "electron-fiddle",
+  "name": "tachybase-fiddle",
   "private": true,
-  "productName": "Electron Fiddle",
-  "version": "0.36.6",
-  "description": "The easiest way to get started with Electron",
-  "repository": "https://github.com/electron/fiddle",
-  "homepage": "https://electronjs.org/fiddle",
+  "productName": "Tachybase Fiddle",
+  "version": "0.0.1",
+  "description": "The easiest way to get started with Tachybase",
+  "repository": "https://github.com/tachybase/fiddle",
+  "homepage": "https://tachybase.org",
   "main": "./.webpack/main",
   "scripts": {
     "contributors": "ts-node ./tools/contributors.ts",
@@ -29,14 +29,14 @@
     "postinstall": "husky && npm run electron-releases"
   },
   "engines": {
-    "node": ">= 20.10.0"
+    "node": ">= 20.18.0"
   },
   "keywords": [
-    "Electron",
+    "Tachybase",
     "Fiddle",
     "Tutorial"
   ],
-  "author": "Felix Rieseberg <felix@felixrieseberg.com>",
+  "author": "Sealday <sealday@gmail.com>",
   "license": "MIT",
   "config": {
     "forge": "./forge.config.ts"
@@ -50,7 +50,7 @@
     "@octokit/rest": "^17.0.0",
     "@sentry/electron": "^5.11.0",
     "algoliasearch": "^4.12.0",
-    "classnames": "^2.2.6",
+    "classnames": "2.5.1",
     "commander": "^7.1.0",
     "electron-default-menu": "^1.0.2",
     "electron-devtools-installer": "^3.1.1",
@@ -78,14 +78,14 @@
     "update-electron-app": "^3.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "7.7.0",
-    "@electron-forge/maker-deb": "7.7.0",
-    "@electron-forge/maker-rpm": "7.7.0",
-    "@electron-forge/maker-squirrel": "7.7.0",
-    "@electron-forge/maker-zip": "7.7.0",
-    "@electron-forge/plugin-fuses": "7.7.0",
-    "@electron-forge/plugin-webpack": "7.7.0",
-    "@electron-forge/publisher-github": "7.7.0",
+    "@electron-forge/cli": "7.8.1",
+    "@electron-forge/maker-deb": "7.8.1",
+    "@electron-forge/maker-rpm": "7.8.1",
+    "@electron-forge/maker-squirrel": "7.8.1",
+    "@electron-forge/maker-zip": "7.8.1",
+    "@electron-forge/plugin-fuses": "7.8.1",
+    "@electron-forge/plugin-webpack": "7.8.1",
+    "@electron-forge/publisher-github": "7.8.1",
     "@electron/fuses": "^1.6.1",
     "@electron/lint-roller": "^2.1.0",
     "@octokit/core": "^3.5.1",
@@ -94,8 +94,7 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.5.2",
-    "@types/classnames": "^2.2.11",
-    "@electron-forge/shared-types": "*",
+    "@electron-forge/shared-types": "7.8.1",
     "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/fs-extra": "^9.0.7",
@@ -107,24 +106,27 @@
     "@types/react-window": "^1.8.5",
     "@types/semver": "^7.3.4",
     "@types/tmp": "0.2.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "8.32.1",
+    "@typescript-eslint/parser": "8.32.1",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
-    "copy-webpack-plugin": "^11.0.0",
+    "copy-webpack-plugin": "13.0.0",
     "css-loader": "^6.7.1",
-    "electron": "33.3.0",
+    "electron": "36.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.7",
     "enzyme-to-json": "^3.6.1",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-tsdoc": "^0.3.0",
+    "eslint": "9.27.0",
+    "@eslint/compat": "1.2.9",
+    "@eslint/js": "9.27.0",
+    "@eslint/eslintrc": "3.3.1",
+    "eslint-config-prettier": "10.1.5",
+    "eslint-import-resolver-typescript": "4.3.5",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-prettier": "5.4.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-tsdoc": "0.4.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
-    "husky": "^9.0.11",
+    "husky": "9.1.7",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
     "jest-junit": "^16.0.0",
@@ -164,8 +166,10 @@
       "npm run lint:style -- --fix"
     ]
   },
-  "resolutions": {
-    "@electron-forge/maker-base": "7.7.0",
-    "@electron-forge/shared-types": "7.7.0"
+  "pnpm": {
+    "overrides": {
+      "@electron-forge/maker-base": "7.8.1",
+      "@electron-forge/shared-types": "7.8.1"
+    }
   }
 }

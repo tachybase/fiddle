@@ -1,5 +1,10 @@
 // Remember to update ambient.d.ts for extending window object
-import { IpcRendererEvent, contextBridge, ipcRenderer } from 'electron';
+import {
+  IpcRendererEvent,
+  contextBridge,
+  ipcRenderer,
+  webUtils,
+} from 'electron';
 
 import {
   BlockableAccelerator,
@@ -49,6 +54,8 @@ const channelMapping: Record<FiddleEvent, IpcEvents> = {
   'undo-in-editor': IpcEvents.UNDO_IN_EDITOR,
   'version-download-progress': IpcEvents.VERSION_DOWNLOAD_PROGRESS,
   'version-state-changed': IpcEvents.VERSION_STATE_CHANGED,
+  'engine-ready': IpcEvents.ENGINE_READY,
+  'engine-started': IpcEvents.ENGINE_STARTED,
 } as const;
 
 async function preload() {
@@ -188,6 +195,7 @@ export async function setupFiddleGlobal() {
         command,
       );
     },
+    getPathForFile: (file: File) => webUtils.getPathForFile(file),
     pathExists: (path: string) =>
       ipcRenderer.sendSync(IpcEvents.PATH_EXISTS, path),
     platform: process.platform,

@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/order
-import { initSentry } from './sentry';
-initSentry();
+import './sentry';
 import {
   BrowserWindow,
   IpcMainEvent,
@@ -30,6 +28,7 @@ import { getUsername } from './utils/get-username';
 import { setupVersions } from './versions';
 import { getOrCreateMainWindow, mainIsReady } from './windows';
 import { IpcEvents } from '../ipc-events';
+import { TachybaseEngine } from './engine';
 
 let argv: string[] = [];
 
@@ -71,6 +70,8 @@ export async function onReady() {
   // any IPC listeners are set up before they're used
   mainIsReady();
   await getOrCreateMainWindow();
+
+  await new TachybaseEngine().start();
 
   processCommandLine(argv);
 }

@@ -35,11 +35,8 @@ interface ContributorInfo {
   location: string;
 }
 
-// Helper function to work around import issues with ESM module
-const dynamicImport = new Function('specifier', 'return import(specifier)');
-
 export async function maybeFetchContributors(silent?: boolean): Promise<void> {
-  const { default: logSymbols } = await dynamicImport('log-symbols');
+  const { default: logSymbols } = await import('log-symbols');
 
   try {
     const stats = fs.statSync(CONTRIBUTORS_FILE_PATH);
@@ -161,7 +158,7 @@ function fetchContributors() {
  * Fetch the contributors and write the result to disk
  */
 async function fetchAndWriteContributorsFile() {
-  const { default: logSymbols } = await dynamicImport('log-symbols');
+  const { default: logSymbols } = await import('log-symbols');
 
   await new Promise<void>((resolve) => {
     fs.access(

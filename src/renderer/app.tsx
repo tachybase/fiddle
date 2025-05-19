@@ -144,6 +144,12 @@ export class App {
     this.setupTypeListeners();
 
     window.ElectronFiddle.sendReady();
+    window.ElectronFiddle.addEventListener('engine-ready', () => {
+      this.state.isEngineReady = true;
+    });
+    window.ElectronFiddle.addEventListener('engine-started', () => {
+      this.state.isEngineStarted = true;
+    });
 
     window.ElectronFiddle.addEventListener('set-show-me-template', () => {
       window.ElectronFiddle.setShowMeTemplate(this.state.templateName);

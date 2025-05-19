@@ -165,6 +165,8 @@ export class AppState {
   public isOnline = navigator.onLine;
   public isQuitting = false;
   public isRunning = false;
+  public isEngineReady = false;
+  public isEngineStarted = false;
   public isSettingsShowing = false;
   public isThemeDialogShowing = false;
   public isTokenDialogShowing = false;
@@ -238,6 +240,8 @@ export class AppState {
       isPublishingGistAsRevision: observable,
       isQuitting: observable,
       isRunning: observable,
+      isEngineReady: observable,
+      isEngineStarted: observable,
       isSettingsShowing: observable,
       isThemeDialogShowing: observable,
       isTokenDialogShowing: observable,
@@ -343,6 +347,8 @@ export class AppState {
     window.ElectronFiddle.removeAllListeners('open-settings');
     window.ElectronFiddle.removeAllListeners('show-welcome-tour');
     window.ElectronFiddle.removeAllListeners('version-download-progress');
+    window.ElectronFiddle.removeAllListeners('engine-ready');
+    window.ElectronFiddle.removeAllListeners('engine-started');
 
     window.ElectronFiddle.addEventListener(
       'open-settings',
