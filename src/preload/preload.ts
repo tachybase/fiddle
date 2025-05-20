@@ -150,6 +150,9 @@ export async function setupFiddleGlobal() {
         ignoreCache,
       );
     },
+    getEngineStatus() {
+      return ipcRenderer.sendSync(IpcEvents.GET_ENGINE_STATUS);
+    },
     getNodeTypes(version: string) {
       return ipcRenderer.invoke(IpcEvents.GET_NODE_TYPES, version);
     },

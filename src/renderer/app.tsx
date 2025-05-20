@@ -144,10 +144,13 @@ export class App {
     this.setupTypeListeners();
 
     window.ElectronFiddle.sendReady();
+    const [engineStatus, enginePort] =
+      window.ElectronFiddle.getEngineStatus().split('|');
+    this.state.engineStatus = engineStatus as any;
+    this.state.enginePort = enginePort;
     window.ElectronFiddle.addEventListener(
       'engine-ready',
       (enginePort: string) => {
-        console.log('🚀 ~ App ~ setup ~ enginePort:', enginePort);
         this.state.pushOutput('[Engine]: Ready');
         this.state.engineStatus = 'ready';
         this.state.enginePort = enginePort;

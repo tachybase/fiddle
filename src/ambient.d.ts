@@ -148,6 +148,7 @@ declare global {
       getOldestSupportedMajor(): number | undefined;
       getReleaseInfo(version: string): Promise<ReleaseInfo | undefined>;
       getReleasedVersions(): Array<Version>;
+      getEngineStatus(): string;
       getUsername(): string;
       getVersionState(version: string): InstallState;
       getPathForFile(file: File): string;

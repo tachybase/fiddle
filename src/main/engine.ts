@@ -16,8 +16,16 @@ const env = {
 };
 
 export class TachybaseEngine {
+  private engineStatus = 'stopped';
+  private enginePort = '';
+
   async start() {
+    this.engineStatus = 'started';
     ipcMainManager.send(IpcEvents.ENGINE_STARTED);
+
+    ipcMainManager.on(IpcEvents.GET_ENGINE_STATUS, (event) => {
+      event.returnValue = this.engineStatus + '|' + this.enginePort;
+    });
 
     const checkRunning = async () => {
       try {
@@ -28,6 +36,8 @@ export class TachybaseEngine {
         if (res !== 'ok') {
           throw new Error('server not ready');
         }
+        this.enginePort = appPort;
+        this.engineStatus = 'ready';
         ipcMainManager.send(IpcEvents.ENGINE_READY, [appPort]);
       } catch {
         setTimeout(() => {

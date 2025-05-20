@@ -78,6 +78,7 @@ export enum IpcEvents {
   ENGINE_STARTED = 'ENGINE_STARTED',
   ENGINE_STDOUT = 'ENGINE_STDOUT',
   ENGINE_STDERR = 'ENGINE_STDERR',
+  GET_ENGINE_STATUS = 'GET_ENGINE_STATUS',
 }
 
 export const ipcMainEvents = [
@@ -128,6 +129,7 @@ export const ipcMainEvents = [
   IpcEvents.ENGINE_STARTED,
   IpcEvents.ENGINE_STDOUT,
   IpcEvents.ENGINE_STDERR,
+  IpcEvents.GET_ENGINE_STATUS,
 ];
 
 export const WEBCONTENTS_READY_FOR_IPC_SIGNAL =

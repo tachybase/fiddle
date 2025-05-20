@@ -176,7 +176,14 @@ export class AppState {
   /// -- Engine --
   public engineStatus: 'stopped' | 'ready' | 'starting' = 'stopped';
   public enginePort = '';
-  public engineEnv = '';
+  public engineEnv =
+    (localStorage.getItem(GlobalSetting.engineEnv) as string) ??
+    `
+WORKER_COUNT=0
+
+DB_DIALECT=sqlite
+DB_STORAGE=storage/db/tachybase.sqlite
+  `;
 
   // -- Editor Values stored when we close the editor ------------------
   private outputBuffer = '';
