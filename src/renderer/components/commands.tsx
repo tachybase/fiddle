@@ -4,11 +4,8 @@ import { Button, ControlGroup } from '@blueprintjs/core';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 
-import { GistActionButton } from './commands-action-button';
-import { AddressBar } from './commands-address-bar';
 import { BisectHandler } from './commands-bisect';
 import { Runner } from './commands-runner';
-import { VersionChooser } from './commands-version-chooser';
 import { AppState } from '../state';
 
 interface CommandsProps {
@@ -54,7 +51,6 @@ export const Commands = observer(
               />
             </ControlGroup>
             <ControlGroup fill={true} vertical={false}>
-              <VersionChooser appState={appState} />
               <Runner appState={appState} />
             </ControlGroup>
             {isBisectCommandShowing && (
@@ -74,10 +70,6 @@ export const Commands = observer(
           {window.ElectronFiddle.platform === 'darwin' ? (
             <div className="title">{title}</div>
           ) : undefined}
-          <div>
-            <AddressBar appState={appState} />
-            <GistActionButton appState={appState} />
-          </div>
         </div>
       );
     }

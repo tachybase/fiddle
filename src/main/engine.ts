@@ -40,20 +40,28 @@ export class TachybaseEngine {
 
     await checkRunning();
 
-    // TODO: fix env
+    // TODO: fix env，可以尝试不要所有的环境变量
     delete env['NODE'];
     delete env['NODE_PATH'];
     const child = spawn(enginePath, ['start'], {
       cwd: workingDir,
       env,
-      stdio: 'inherit',
+      stdio: 'pipe',
     });
+    child.stdout.on('data', (data) => {
+      ipcMainManager.send(IpcEvents.ENGINE_STDOUT, [data.toString()]);
+    });
+
+    child.stderr.on('data', (data) => {
+      ipcMainManager.send(IpcEvents.ENGINE_STDERR, [data.toString()]);
+    });
+
     child.on('error', (error) => {
-      console.error(`Error starting engine: ${error.message}`);
+      console.error(`[Engine]: Error starting engine: ${error.message}`);
     });
 
     child.on('exit', (code) => {
-      console.log(`engine exited with code ${code}`);
+      console.log(`[Engine]: engine exited with code ${code}`);
     });
   }
 }

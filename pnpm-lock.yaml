@@ -69,6 +69,9 @@ importers:
       mobx-react:
         specifier: ^7.3.0
         version: 7.6.0(mobx@6.13.7)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+      mobx-react-lite:
+        specifier: 3.4.3
+        version: 3.4.3(mobx@6.13.7)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       monaco-editor:
         specifier: ^0.21.3
         version: 0.21.3

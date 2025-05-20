@@ -145,10 +145,20 @@ export class App {
 
     window.ElectronFiddle.sendReady();
     window.ElectronFiddle.addEventListener('engine-ready', () => {
+      this.state.pushOutput('[Engine]: Ready');
       this.state.isEngineReady = true;
     });
     window.ElectronFiddle.addEventListener('engine-started', () => {
+      this.state.pushOutput('[Engine]: Started');
       this.state.isEngineStarted = true;
+    });
+
+    window.ElectronFiddle.addEventListener('engine-stdout', (data) => {
+      this.state.pushOutput(data);
+    });
+
+    window.ElectronFiddle.addEventListener('engine-stderr', (data) => {
+      this.state.pushOutput(data);
     });
 
     window.ElectronFiddle.addEventListener('set-show-me-template', () => {

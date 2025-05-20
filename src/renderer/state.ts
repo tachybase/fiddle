@@ -573,7 +573,7 @@ export class AppState {
   get title(): string {
     const { isEdited } = this.editorMosaic;
 
-    return isEdited ? 'Electron Fiddle - Unsaved' : 'Electron Fiddle';
+    return isEdited ? 'Tachybase Fiddle - Unsaved' : 'Tachybase Fiddle';
   }
 
   /**

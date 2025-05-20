@@ -76,6 +76,8 @@ export enum IpcEvents {
   VERSION_STATE_CHANGED = 'VERSION_STATE_CHANGED',
   ENGINE_READY = 'ENGINE_READY',
   ENGINE_STARTED = 'ENGINE_STARTED',
+  ENGINE_STDOUT = 'ENGINE_STDOUT',
+  ENGINE_STDERR = 'ENGINE_STDERR',
 }
 
 export const ipcMainEvents = [
@@ -124,6 +126,8 @@ export const ipcMainEvents = [
   IpcEvents.REMOVE_VERSION,
   IpcEvents.ENGINE_READY,
   IpcEvents.ENGINE_STARTED,
+  IpcEvents.ENGINE_STDOUT,
+  IpcEvents.ENGINE_STDERR,
 ];
 
 export const WEBCONTENTS_READY_FOR_IPC_SIGNAL =

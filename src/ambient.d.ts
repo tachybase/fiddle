@@ -49,15 +49,15 @@ declare global {
         listener: (commandId: string) => void,
         options?: { signal: AbortSignal },
       ): void;
+      addEventListener(type: 'engine-started', listener: () => void): void;
+      addEventListener(type: 'engine-ready', listener: () => void): void;
       addEventListener(
-        type: 'engine-started',
-        listener: (commandId: string) => void,
-        options?: { signal: AbortSignal },
+        type: 'engine-stdout',
+        listener: (data: string) => void,
       ): void;
       addEventListener(
-        type: 'engine-ready',
-        listener: (commandId: string) => void,
-        options?: { signal: AbortSignal },
+        type: 'engine-stderr',
+        listener: (data: string) => void,
       ): void;
       addEventListener(
         type: 'fiddle-runner-output',
