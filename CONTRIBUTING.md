@@ -62,7 +62,7 @@ Here are some things to keep in mind as you file pull requests to fix bugs, add 
 ### Running Tests
 
 ```sh
-yarn test
+pnpm test
 ```
 
 Note that console calls, e.g. console.log(), are mocked out during tests
@@ -77,12 +77,12 @@ environment variable `FIDDLE_VERBOSE_TESTS` when running.
 
 First, create a new branch for your release.
 
-Then, run the [`yarn version`](https://classic.yarnpkg.com/en/docs/cli/version/)
+Then, run the [`pnpm version`](https://docs.npmjs.com/cli/v8/commands/npm-version)
 command, which will guide you through an interactive prompt to update the package
 version number.
 
 ```sh
-yarn version
+pnpm version
 info Current version: 1.0.1
 question New version: 1.0.2
 info New version: 1.0.2
