@@ -55,6 +55,7 @@ const channelMapping: Record<FiddleEvent, IpcEvents> = {
   'version-download-progress': IpcEvents.VERSION_DOWNLOAD_PROGRESS,
   'version-state-changed': IpcEvents.VERSION_STATE_CHANGED,
   'engine-ready': IpcEvents.ENGINE_READY,
+  'engine-status-changed': IpcEvents.ENGINE_STATUS_CHANGED,
   'engine-started': IpcEvents.ENGINE_STARTED,
   'engine-stdout': IpcEvents.ENGINE_STDOUT,
   'engine-stderr': IpcEvents.ENGINE_STDERR,
@@ -247,6 +248,12 @@ export async function setupFiddleGlobal() {
     },
     async startFiddle(params: StartFiddleParams) {
       await ipcRenderer.invoke(IpcEvents.START_FIDDLE, params);
+    },
+    async startEngine(env: string) {
+      await ipcRenderer.invoke(IpcEvents.ENGINE_START, env);
+    },
+    async stopEngine() {
+      await ipcRenderer.invoke(IpcEvents.ENGINE_STOP);
     },
     stopFiddle() {
       ipcRenderer.send(IpcEvents.STOP_FIDDLE);

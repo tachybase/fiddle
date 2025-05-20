@@ -175,6 +175,7 @@ export type FiddleEvent =
   | 'before-quit'
   | 'engine-ready'
   | 'engine-started'
+  | 'engine-status-changed'
   | 'engine-stdout'
   | 'engine-stderr'
   | 'bisect-task'

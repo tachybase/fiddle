@@ -71,7 +71,7 @@ export async function onReady() {
   mainIsReady();
   await getOrCreateMainWindow();
 
-  await new TachybaseEngine().start();
+  new TachybaseEngine();
 
   processCommandLine(argv);
 }

@@ -183,6 +183,10 @@ WORKER_COUNT=0
 
 DB_DIALECT=sqlite
 DB_STORAGE=storage/db/tachybase.sqlite
+
+APP_PORT=9876
+ENGINE_PATH=
+ENGINE_WORKING_PATH=
   `;
 
   // -- Editor Values stored when we close the editor ------------------

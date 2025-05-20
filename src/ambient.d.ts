@@ -55,6 +55,10 @@ declare global {
         listener: (port: string) => void,
       ): void;
       addEventListener(
+        type: 'engine-status-changed',
+        listener: (status: string, port: string) => void,
+      ): void;
+      addEventListener(
         type: 'engine-stdout',
         listener: (data: string) => void,
       ): void;
@@ -181,6 +185,8 @@ declare global {
       showWarningDialog(messageOptions: MessageOptions): void;
       showWindow(): void;
       startFiddle(params: StartFiddleParams): Promise<void>;
+      startEngine(env: string): Promise<void>;
+      stopEngine(): Promise<void>;
       stopFiddle(): void;
       taskDone(result: RunResult): void;
       themePath: string;

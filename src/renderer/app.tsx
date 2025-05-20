@@ -149,18 +149,21 @@ export class App {
     this.state.engineStatus = engineStatus as any;
     this.state.enginePort = enginePort;
     window.ElectronFiddle.addEventListener(
-      'engine-ready',
-      (enginePort: string) => {
-        this.state.pushOutput('[Engine]: Ready');
-        this.state.engineStatus = 'ready';
-        this.state.enginePort = enginePort;
+      'engine-status-changed',
+      (status: string, enginePort: string) => {
+        if (status === 'ready') {
+          this.state.pushOutput('[Engine]: Ready');
+          this.state.engineStatus = 'ready';
+          this.state.enginePort = enginePort;
+        } else if (status === 'started') {
+          this.state.pushOutput('[Engine]: Started');
+          this.state.engineStatus = 'starting';
+        } else if (status === 'stopped') {
+          this.state.pushOutput('[Engine]: Stopped');
+          this.state.engineStatus = 'stopped';
+        }
       },
     );
-    window.ElectronFiddle.addEventListener('engine-started', () => {
-      this.state.pushOutput('[Engine]: Started');
-      this.state.engineStatus = 'starting';
-    });
-
     window.ElectronFiddle.addEventListener('engine-stdout', (data) => {
       this.state.pushOutput(data);
     });

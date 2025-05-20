@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Button, ButtonProps, Spinner } from '@blueprintjs/core';
 import { observer } from 'mobx-react';
 
-import { InstallState, VersionSource } from '../../interfaces';
 import { AppState } from '../state';
 
 interface RunnerProps {
@@ -17,59 +16,36 @@ interface RunnerProps {
 export const Runner = observer(
   class Runner extends React.Component<RunnerProps> {
     public render() {
-      const { downloaded, downloading, missing, installing, installed } =
-        InstallState;
-      const {
-        isRunning,
-        isInstallingModules,
-        currentElectronVersion,
-        isOnline,
-      } = this.props.appState;
+      const { engineStatus, engineEnv } = this.props.appState;
 
-      const { downloadProgress, source, state } = currentElectronVersion;
-      const props: ButtonProps = { disabled: true };
+      const props: ButtonProps = { disabled: false };
 
-      if ([downloading, missing].includes(state) && !isOnline) {
-        props.text = 'Offline';
-        props.icon = 'satellite';
-        return <Button id="button-run" {...props} type={undefined} />;
-      }
-
-      switch (state) {
-        case downloading: {
-          props.text = 'Downloading';
-          props.icon = <Spinner size={16} value={downloadProgress} />;
+      switch (engineStatus) {
+        case 'stopped': {
+          props.text = 'Run';
+          props.onClick = async () => {
+            try {
+              await window.ElectronFiddle.startEngine(engineEnv);
+            } catch (err) {
+              this.props.appState.pushError(err.message, err);
+            }
+          };
+          props.icon = 'play';
           break;
         }
-        case installing: {
-          props.text = 'Unzipping';
+        case 'ready': {
+          props.active = true;
+          props.text = 'Stop';
+          props.icon = 'stop';
+          props.onClick = () => {
+            window.ElectronFiddle.stopEngine();
+          };
+          break;
+        }
+        case 'starting': {
+          props.text = 'Starting';
           props.icon = <Spinner size={16} />;
           break;
-        }
-        case downloaded:
-        case installed: {
-          props.disabled = false;
-          if (isRunning) {
-            props.active = true;
-            props.text = 'Stop';
-            props.onClick = window.app.runner.stop;
-            props.icon = 'stop';
-          } else if (isInstallingModules) {
-            props.text = 'Installing modules';
-            props.icon = <Spinner size={16} />;
-          } else {
-            props.text = 'Run';
-            props.onClick = window.app.runner.run;
-            props.icon = 'play';
-          }
-          break;
-        }
-        case missing: {
-          if (source === VersionSource.local) {
-            props.text = 'Unavailable';
-            props.icon = 'issue';
-            break;
-          }
         }
         default: {
           props.text = 'Checking status';

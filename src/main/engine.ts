@@ -1,31 +1,48 @@
-import { spawn } from 'node:child_process';
+import { ChildProcessWithoutNullStreams, spawn } from 'node:child_process';
 import path from 'node:path';
+
+import dotenv from 'dotenv';
+import { IpcMainEvent } from 'electron';
 
 import { ipcMainManager } from './ipc';
 import { IpcEvents } from '../ipc-events';
 
-const enginePath = '/Users/seal/Documents/projects/tb-starter/engine';
-const workingDir = '/Users/seal/Documents/projects/tb-starter';
-
-const appPort = '9876';
-
-// 允许配置环境变量
-const env = {
-  APP_PORT: appPort,
-  NODE_MODULES_PATH: path.join(workingDir, 'plugins/node_modules'),
-};
-
 export class TachybaseEngine {
   private engineStatus = 'stopped';
   private enginePort = '';
+  private child: ChildProcessWithoutNullStreams | null = null;
 
-  async start() {
-    this.engineStatus = 'started';
-    ipcMainManager.send(IpcEvents.ENGINE_STARTED);
-
+  constructor() {
     ipcMainManager.on(IpcEvents.GET_ENGINE_STATUS, (event) => {
       event.returnValue = this.engineStatus + '|' + this.enginePort;
     });
+
+    ipcMainManager.handle(
+      IpcEvents.ENGINE_START,
+      (_: IpcMainEvent, env: string) => this.start.bind(this)(env),
+    );
+    ipcMainManager.handle(IpcEvents.ENGINE_STOP, (_: IpcMainEvent) =>
+      this.stop.bind(this)(),
+    );
+  }
+
+  async start(rawEnvString: string) {
+    const env = dotenv.parse(rawEnvString);
+
+    const enginePath = env.ENGINE_PATH;
+    const workingDir = env.ENGINE_WORKING_DIR;
+    const appPort = env.APP_PORT;
+
+    if (!enginePath || !workingDir || !appPort) {
+      throw new Error(
+        'ENGINE_PATH, ENGINE_WORKING_DIR, and APP_PORT must be set',
+      );
+    }
+
+    env.NODE_MODULES_PATH = path.join(workingDir, 'plugins/node_modules');
+
+    this.engineStatus = 'started';
+    ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['started']);
 
     const checkRunning = async () => {
       try {
@@ -38,7 +55,10 @@ export class TachybaseEngine {
         }
         this.enginePort = appPort;
         this.engineStatus = 'ready';
-        ipcMainManager.send(IpcEvents.ENGINE_READY, [appPort]);
+        ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, [
+          'ready',
+          appPort,
+        ]);
       } catch {
         setTimeout(() => {
           checkRunning();
@@ -48,25 +68,31 @@ export class TachybaseEngine {
 
     await checkRunning();
 
-    const child = spawn(enginePath, ['start'], {
+    this.child = spawn(enginePath, ['start'], {
       cwd: workingDir,
       env,
       stdio: 'pipe',
     });
-    child.stdout.on('data', (data) => {
+    this.child.stdout.on('data', (data) => {
       ipcMainManager.send(IpcEvents.ENGINE_STDOUT, [data.toString()]);
     });
 
-    child.stderr.on('data', (data) => {
+    this.child.stderr.on('data', (data) => {
       ipcMainManager.send(IpcEvents.ENGINE_STDERR, [data.toString()]);
     });
 
-    child.on('error', (error) => {
+    this.child.on('error', (error) => {
       console.error(`[Engine]: Error starting engine: ${error.message}`);
     });
 
-    child.on('exit', (code) => {
+    this.child.on('exit', (code) => {
       console.log(`[Engine]: engine exited with code ${code}`);
     });
+  }
+
+  async stop() {
+    this.child?.kill();
+    this.engineStatus = 'stopped';
+    ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
   }
 }
