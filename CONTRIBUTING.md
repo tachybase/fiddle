@@ -1,7 +1,7 @@
-# Contributing to Electron Fiddle
+# Contributing to Tachybase Fiddle
 
-Electron Fiddle is a community-driven project, overseen by the [Electron Ecosystem Working
-Group](https://github.com/electron/governance/tree/main/wg-ecosystem#readme). As such, we welcome
+Tachybase Fiddle is a community-driven project, overseen by the [Tachybase Ecosystem Working
+Group](https://github.com/tachybase/governance/tree/main/wg-ecosystem#readme). As such, we welcome
 and encourage all sorts of contributions. They include, but are not limited to:
 
 - Constructive feedback
@@ -13,13 +13,9 @@ and encourage all sorts of contributions. They include, but are not limited to:
 We strongly suggest that before filing an issue, you search through the existing issues to see
 if it has already been filed by someone else.
 
-This project is a part of the Electron ecosystem. As such, all contributions to this project follow
-[Electron's code of conduct](https://github.com/electron/electron/blob/main/CODE_OF_CONDUCT.md)
-where appropriate.
-
 ## Contribution Suggestions
 
-We use the label [`good first issue`](https://github.com/electron/fiddle/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) in the issue tracker to denote fairly-well-scoped-out bugs or feature requests that the community can pick up and work on. If any of those labeled issues do not have enough information, please feel free to ask constructive questions. (This applies to any open issue.)
+We use the label [`good first issue`](https://github.com/tachybase/fiddle/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) in the issue tracker to denote fairly-well-scoped-out bugs or feature requests that the community can pick up and work on. If any of those labeled issues do not have enough information, please feel free to ask constructive questions. (This applies to any open issue.)
 
 ## Filing Pull Requests
 
@@ -39,10 +35,10 @@ Here are some things to keep in mind as you file pull requests to fix bugs, add 
 
 ### Running Fiddle From Source
 
-1. Clone the Electron Fiddle repository locally.
+1. Clone the Tachybase Fiddle repository locally.
 
     ```sh
-    git clone https://github.com/electron/fiddle.git
+    git clone https://github.com/tachybase/fiddle.git
     ```
 
 2. Change directory to where Fiddle has been cloned.
@@ -54,13 +50,13 @@ Here are some things to keep in mind as you file pull requests to fix bugs, add 
 3. Install dependencies.
 
     ```sh
-    yarn
+    pnpm install 
     ```
 
 4. Start Fiddle and explore!
 
     ```sh
-    yarn start
+    pnpm start
     ```
 
 ### Running Tests
@@ -77,7 +73,7 @@ environment variable `FIDDLE_VERBOSE_TESTS` when running.
 ## Release Process
 
 > **Note:** Releasing is only available to contributors who have write
-> access to the `electron/fiddle` repository.
+> access to the `tachybase/fiddle` repository.
 
 First, create a new branch for your release.
 
