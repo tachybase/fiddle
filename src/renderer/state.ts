@@ -186,7 +186,7 @@ DB_STORAGE=storage/db/tachybase.sqlite
 
 APP_PORT=9876
 ENGINE_PATH=
-ENGINE_WORKING_PATH=
+ENGINE_WORKING_DIR=
   `;
 
   // -- Editor Values stored when we close the editor ------------------

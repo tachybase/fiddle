@@ -10,8 +10,7 @@ interface RunnerProps {
 }
 
 /**
- * The runner component is responsible for actually launching the fiddle
- * with Electron. It also renders the button that does so.
+ * The runner component is responsible for actually launching the engine. It also renders the button that does so.
  */
 export const Runner = observer(
   class Runner extends React.Component<RunnerProps> {
@@ -34,7 +33,6 @@ export const Runner = observer(
           break;
         }
         case 'ready': {
-          props.active = true;
           props.text = 'Stop';
           props.icon = 'stop';
           props.onClick = () => {

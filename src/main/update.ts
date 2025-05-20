@@ -8,7 +8,7 @@ export function setupUpdates() {
     const { updateElectronApp } = require('update-electron-app');
 
     updateElectronApp({
-      repo: 'electron/fiddle',
+      repo: 'tachybase/fiddle',
       updateInterval: '1 hour',
     });
   }, 10000);
