@@ -55,7 +55,10 @@ const channelMapping: Record<FiddleEvent, IpcEvents> = {
   'version-download-progress': IpcEvents.VERSION_DOWNLOAD_PROGRESS,
   'version-state-changed': IpcEvents.VERSION_STATE_CHANGED,
   'engine-ready': IpcEvents.ENGINE_READY,
+  'engine-status-changed': IpcEvents.ENGINE_STATUS_CHANGED,
   'engine-started': IpcEvents.ENGINE_STARTED,
+  'engine-stdout': IpcEvents.ENGINE_STDOUT,
+  'engine-stderr': IpcEvents.ENGINE_STDERR,
 } as const;
 
 async function preload() {
@@ -147,6 +150,9 @@ export async function setupFiddleGlobal() {
         packageManager,
         ignoreCache,
       );
+    },
+    getEngineStatus() {
+      return ipcRenderer.sendSync(IpcEvents.GET_ENGINE_STATUS);
     },
     getNodeTypes(version: string) {
       return ipcRenderer.invoke(IpcEvents.GET_NODE_TYPES, version);
@@ -242,6 +248,12 @@ export async function setupFiddleGlobal() {
     },
     async startFiddle(params: StartFiddleParams) {
       await ipcRenderer.invoke(IpcEvents.START_FIDDLE, params);
+    },
+    async startEngine(env: string) {
+      await ipcRenderer.invoke(IpcEvents.ENGINE_START, env);
+    },
+    async stopEngine() {
+      await ipcRenderer.invoke(IpcEvents.ENGINE_STOP);
     },
     stopFiddle() {
       ipcRenderer.send(IpcEvents.STOP_FIDDLE);

@@ -49,15 +49,22 @@ declare global {
         listener: (commandId: string) => void,
         options?: { signal: AbortSignal },
       ): void;
-      addEventListener(
-        type: 'engine-started',
-        listener: (commandId: string) => void,
-        options?: { signal: AbortSignal },
-      ): void;
+      addEventListener(type: 'engine-started', listener: () => void): void;
       addEventListener(
         type: 'engine-ready',
-        listener: (commandId: string) => void,
-        options?: { signal: AbortSignal },
+        listener: (port: string) => void,
+      ): void;
+      addEventListener(
+        type: 'engine-status-changed',
+        listener: (status: string, port: string) => void,
+      ): void;
+      addEventListener(
+        type: 'engine-stdout',
+        listener: (data: string) => void,
+      ): void;
+      addEventListener(
+        type: 'engine-stderr',
+        listener: (data: string) => void,
       ): void;
       addEventListener(
         type: 'fiddle-runner-output',
@@ -145,6 +152,7 @@ declare global {
       getOldestSupportedMajor(): number | undefined;
       getReleaseInfo(version: string): Promise<ReleaseInfo | undefined>;
       getReleasedVersions(): Array<Version>;
+      getEngineStatus(): string;
       getUsername(): string;
       getVersionState(version: string): InstallState;
       getPathForFile(file: File): string;
@@ -177,6 +185,8 @@ declare global {
       showWarningDialog(messageOptions: MessageOptions): void;
       showWindow(): void;
       startFiddle(params: StartFiddleParams): Promise<void>;
+      startEngine(env: string): Promise<void>;
+      stopEngine(): Promise<void>;
       stopFiddle(): void;
       taskDone(result: RunResult): void;
       themePath: string;

@@ -175,6 +175,9 @@ export type FiddleEvent =
   | 'before-quit'
   | 'engine-ready'
   | 'engine-started'
+  | 'engine-status-changed'
+  | 'engine-stdout'
+  | 'engine-stderr'
   | 'bisect-task'
   | 'clear-console'
   | 'electron-types-changed'
@@ -242,6 +245,7 @@ export enum GlobalSetting {
   showObsoleteVersions = 'showObsoleteVersions',
   showUndownloadedVersions = 'showUndownloadedVersions',
   theme = 'theme',
+  engineEnv = 'engineEnv',
 }
 
 export enum WindowSpecificSetting {

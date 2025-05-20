@@ -16,12 +16,7 @@ enum SettingsSections {
   Credits = 'Credits',
 }
 
-const settingsSections = [
-  SettingsSections.General,
-  SettingsSections.Electron,
-  SettingsSections.Execution,
-  SettingsSections.Credits,
-];
+const settingsSections = [SettingsSections.General];
 
 interface SettingsProps {
   appState: AppState;
