@@ -165,8 +165,6 @@ export class AppState {
   public isOnline = navigator.onLine;
   public isQuitting = false;
   public isRunning = false;
-  public isEngineReady = false;
-  public isEngineStarted = false;
   public isSettingsShowing = false;
   public isThemeDialogShowing = false;
   public isTokenDialogShowing = false;
@@ -174,6 +172,11 @@ export class AppState {
   public isUpdatingElectronVersions = false;
   public isDownloadingAll = false;
   public isDeletingAll = false;
+
+  /// -- Engine --
+  public engineStatus: 'stopped' | 'ready' | 'starting' = 'stopped';
+  public enginePort = '';
+  public engineEnv = '';
 
   // -- Editor Values stored when we close the editor ------------------
   private outputBuffer = '';
@@ -240,8 +243,11 @@ export class AppState {
       isPublishingGistAsRevision: observable,
       isQuitting: observable,
       isRunning: observable,
-      isEngineReady: observable,
-      isEngineStarted: observable,
+      // engine part start
+      engineStatus: observable,
+      enginePort: observable,
+      engineEnv: observable,
+      // engine part end
       isSettingsShowing: observable,
       isThemeDialogShowing: observable,
       isTokenDialogShowing: observable,
@@ -349,6 +355,8 @@ export class AppState {
     window.ElectronFiddle.removeAllListeners('version-download-progress');
     window.ElectronFiddle.removeAllListeners('engine-ready');
     window.ElectronFiddle.removeAllListeners('engine-started');
+    window.ElectronFiddle.removeAllListeners('engine-stderr');
+    window.ElectronFiddle.removeAllListeners('engine-stdout');
 
     window.ElectronFiddle.addEventListener(
       'open-settings',
@@ -425,6 +433,7 @@ export class AppState {
           case GlobalSetting.packageAuthor:
           case GlobalSetting.packageManager:
           case GlobalSetting.showObsoleteVersions:
+          case GlobalSetting.engineEnv:
           case GlobalSetting.showUndownloadedVersions: {
             // Fall back to updating the state.
             (this[key] as any) = parsedValue;
@@ -545,6 +554,7 @@ export class AppState {
     autorun(() => this.save(GlobalSetting.electronMirror, this.electronMirror));
     autorun(() => this.save(GlobalSetting.fontFamily, this.fontFamily));
     autorun(() => this.save(GlobalSetting.fontSize, this.fontSize));
+    autorun(() => this.save(GlobalSetting.engineEnv, this.engineEnv));
 
     // Update our known versions
     this.updateElectronVersions();

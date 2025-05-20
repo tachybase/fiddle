@@ -50,7 +50,10 @@ declare global {
         options?: { signal: AbortSignal },
       ): void;
       addEventListener(type: 'engine-started', listener: () => void): void;
-      addEventListener(type: 'engine-ready', listener: () => void): void;
+      addEventListener(
+        type: 'engine-ready',
+        listener: (port: string) => void,
+      ): void;
       addEventListener(
         type: 'engine-stdout',
         listener: (data: string) => void,

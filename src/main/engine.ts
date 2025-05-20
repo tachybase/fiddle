@@ -9,11 +9,9 @@ const workingDir = '/Users/seal/Documents/projects/tb-starter';
 
 const appPort = '9876';
 
+// 允许配置环境变量
 const env = {
-  ...process.env, // 保留原有环境变量
   APP_PORT: appPort,
-  NODE: undefined,
-  NODE_PATH: undefined,
   NODE_MODULES_PATH: path.join(workingDir, 'plugins/node_modules'),
 };
 
@@ -30,7 +28,7 @@ export class TachybaseEngine {
         if (res !== 'ok') {
           throw new Error('server not ready');
         }
-        ipcMainManager.send(IpcEvents.ENGINE_READY);
+        ipcMainManager.send(IpcEvents.ENGINE_READY, [appPort]);
       } catch {
         setTimeout(() => {
           checkRunning();
@@ -40,9 +38,6 @@ export class TachybaseEngine {
 
     await checkRunning();
 
-    // TODO: fix env，可以尝试不要所有的环境变量
-    delete env['NODE'];
-    delete env['NODE_PATH'];
     const child = spawn(enginePath, ['start'], {
       cwd: workingDir,
       env,

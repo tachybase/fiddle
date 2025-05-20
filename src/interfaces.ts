@@ -244,6 +244,7 @@ export enum GlobalSetting {
   showObsoleteVersions = 'showObsoleteVersions',
   showUndownloadedVersions = 'showUndownloadedVersions',
   theme = 'theme',
+  engineEnv = 'engineEnv',
 }
 
 export enum WindowSpecificSetting {

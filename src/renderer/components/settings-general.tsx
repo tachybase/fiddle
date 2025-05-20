@@ -11,6 +11,7 @@ import { GitHubSettings } from './settings-general-github';
 import { MirrorSettings } from './settings-general-mirror';
 import { PackageAuthorSettings } from './settings-general-package-author';
 import { AppState } from '../state';
+import { EngineEnvSettings } from './settings-general-engine-env';
 
 interface GeneralSettingsProps {
   appState: AppState;
@@ -40,6 +41,8 @@ export const GeneralSettings = observer(
           <BlockAcceleratorsSettings appState={this.props.appState} />
           <Divider />
           <PackageAuthorSettings appState={this.props.appState} />
+          <Divider />
+          <EngineEnvSettings appState={this.props.appState} />
           <Divider />
           <MirrorSettings appState={this.props.appState} />
         </div>
