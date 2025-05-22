@@ -46,6 +46,7 @@ export class TachybaseEngine {
 
     if (remoteUrl) {
       this.engineStatus = 'remote';
+      this.enginePort = remoteUrl;
       ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, [
         'remote',
         remoteUrl,

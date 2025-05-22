@@ -45,6 +45,11 @@ export const Commands = observer(
           <div>
             <ControlGroup fill={true} vertical={false}>
               <Button
+                onClick={() => window.ElectronFiddle.reloadWindows()}
+                icon="repeat"
+                title="Reload Window"
+              />
+              <Button
                 icon="cog"
                 title="Setting"
                 onClick={appState.toggleSettings}
