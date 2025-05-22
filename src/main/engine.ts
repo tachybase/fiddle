@@ -44,7 +44,7 @@ export class TachybaseEngine {
       throw new Error('REMOTE_URL must be set when engine is disabled');
     }
 
-    if (remoteUrl) {
+    if (!enabled && remoteUrl) {
       this.engineStatus = 'remote';
       this.enginePort = remoteUrl;
       ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, [
