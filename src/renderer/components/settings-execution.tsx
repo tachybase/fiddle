@@ -250,7 +250,7 @@ export const ExecutionSettings = observer(
         <div>
           <h1>Execution</h1>
           <Callout>
-            These advanced settings control how Electron Fiddle executes your
+            These advanced settings control how Tachybase Fiddle executes your
             fiddles.
           </Callout>
           <br />
@@ -319,7 +319,7 @@ export const ExecutionSettings = observer(
           <Callout>
             <FormGroup>
               <span style={{ marginRight: 4 }}>
-                Electron Fiddle will install packages if you specify them. It
+                Tachybase Fiddle will install packages if you specify them. It
                 uses{' '}
                 <a
                   href="https://www.npmjs.com/"

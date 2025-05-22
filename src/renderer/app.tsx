@@ -161,6 +161,10 @@ export class App {
         } else if (status === 'stopped') {
           this.state.pushOutput('[Engine]: Stopped');
           this.state.engineStatus = 'stopped';
+        } else if (status === 'remote') {
+          this.state.pushOutput(`[Engine]: Load remote url: ${enginePort}`);
+          this.state.engineStatus = 'remote';
+          this.state.enginePort = enginePort;
         }
       },
     );

@@ -104,7 +104,7 @@ async function logConfig() {
 }
 
 async function exitWithCode(code: number) {
-  console.log(`Electron Fiddle is exiting with code ${code}`);
+  console.log(`Tachybase Fiddle is exiting with code ${code}`);
   process.exit(code);
 }
 

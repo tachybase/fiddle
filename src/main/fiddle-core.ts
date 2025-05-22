@@ -22,7 +22,7 @@ const downloadingVersions = new Map<string, Promise<any>>();
 const removingVersions = new Map<string, Promise<void>>();
 
 /**
- * Start running an Electron fiddle.
+ * Start running an Tachybase Fiddle.
  */
 export async function startFiddle(
   webContents: WebContents,
@@ -76,7 +76,7 @@ export async function startFiddle(
 }
 
 /**
- * Stop a currently running Electron fiddle.
+ * Stop a currently running Tachybase Fiddle.
  */
 export function stopFiddle(webContents: WebContents): void {
   const child = fiddleProcesses.get(webContents);

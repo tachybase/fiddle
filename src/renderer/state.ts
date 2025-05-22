@@ -174,7 +174,7 @@ export class AppState {
   public isDeletingAll = false;
 
   /// -- Engine --
-  public engineStatus: 'stopped' | 'ready' | 'starting' = 'stopped';
+  public engineStatus: 'stopped' | 'ready' | 'starting' | 'remote' = 'stopped';
   public enginePort = '';
   public engineEnv =
     (localStorage.getItem(GlobalSetting.engineEnv) as string) ??
@@ -185,8 +185,11 @@ DB_DIALECT=sqlite
 DB_STORAGE=storage/db/tachybase.sqlite
 
 APP_PORT=9876
+ENGINE_ENABLED=1
 ENGINE_PATH=
 ENGINE_WORKING_DIR=
+
+REMOTE_URL=
   `;
 
   // -- Editor Values stored when we close the editor ------------------

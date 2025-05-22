@@ -7,6 +7,11 @@ import { IpcMainEvent } from 'electron';
 import { ipcMainManager } from './ipc';
 import { IpcEvents } from '../ipc-events';
 
+/**
+ * TachybaseEngine class
+ *
+ * enginePort 现在存的是完整的 url
+ */
 export class TachybaseEngine {
   private engineStatus = 'stopped';
   private enginePort = '';
@@ -29,15 +34,31 @@ export class TachybaseEngine {
   async start(rawEnvString: string) {
     const env = dotenv.parse(rawEnvString);
 
+    const enabled = env.ENGINE_ENABLED === '1';
     const enginePath = env.ENGINE_PATH;
     const workingDir = env.ENGINE_WORKING_DIR;
     const appPort = env.APP_PORT;
+    let remoteUrl = env.REMOTE_URL;
+
+    if (!enabled && !remoteUrl) {
+      throw new Error('REMOTE_URL must be set when engine is disabled');
+    }
+
+    if (remoteUrl) {
+      this.engineStatus = 'remote';
+      ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, [
+        'remote',
+        remoteUrl,
+      ]);
+      return;
+    }
 
     if (!enginePath || !workingDir || !appPort) {
       throw new Error(
         'ENGINE_PATH, ENGINE_WORKING_DIR, and APP_PORT must be set',
       );
     }
+    remoteUrl = `http://localhost:${appPort}`;
 
     env.NODE_MODULES_PATH = path.join(workingDir, 'plugins/node_modules');
 
@@ -46,18 +67,16 @@ export class TachybaseEngine {
 
     const checkRunning = async () => {
       try {
-        const result = await fetch(
-          `http://localhost:${appPort}/api/__health_check`,
-        );
+        const result = await fetch(`${remoteUrl}/api/__health_check`);
         const res = await result.text();
         if (res !== 'ok') {
           throw new Error('server not ready');
         }
-        this.enginePort = appPort;
+        this.enginePort = remoteUrl;
         this.engineStatus = 'ready';
         ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, [
           'ready',
-          appPort,
+          remoteUrl,
         ]);
       } catch {
         setTimeout(() => {
@@ -87,12 +106,22 @@ export class TachybaseEngine {
 
     this.child.on('exit', (code) => {
       console.log(`[Engine]: engine exited with code ${code}`);
+
+      if (this.engineStatus !== 'stopped') {
+        this.engineStatus = 'stopped';
+        ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
+      }
     });
   }
 
   async stop() {
-    this.child?.kill();
-    this.engineStatus = 'stopped';
-    ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
+    if (this.engineStatus === 'ready') {
+      this.child?.kill();
+      this.engineStatus = 'stopped';
+      ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
+    } else if (this.engineStatus === 'remote') {
+      this.engineStatus = 'stopped';
+      ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
+    }
   }
 }

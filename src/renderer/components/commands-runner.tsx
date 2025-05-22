@@ -32,6 +32,7 @@ export const Runner = observer(
           props.icon = 'play';
           break;
         }
+        case 'remote':
         case 'ready': {
           props.text = 'Stop';
           props.icon = 'stop';

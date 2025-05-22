@@ -224,7 +224,7 @@ export class Runner {
   }
 
   /**
-   * Stop a currently running Electron fiddle.
+   * Stop a currently running Tachybase Fiddle.
    */
   public stop(): void {
     window.ElectronFiddle.stopFiddle();

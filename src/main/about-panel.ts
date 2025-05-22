@@ -20,7 +20,7 @@ export function setupAboutPanel(): void {
   const iconPath = path.resolve(__dirname, '../assets/icons/fiddle.png');
 
   app.setAboutPanelOptions({
-    applicationName: 'Electron Fiddle',
+    applicationName: 'Tachybase Fiddle',
     applicationVersion: app.getVersion(),
     authors: contributors,
     copyright: '© Electron Authors',

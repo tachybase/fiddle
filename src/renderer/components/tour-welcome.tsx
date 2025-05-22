@@ -15,7 +15,7 @@ interface WelcomeTourState {
 }
 
 /**
- * This is our "Welcome to Electron Fiddle" Tour. It includes both an intro to
+ * This is our "Welcome to Tachybase Fiddle" Tour. It includes both an intro to
  * the app and a short intro to Electron.
  */
 export function getWelcomeTour(): Set<TourScriptStep> {
@@ -27,9 +27,10 @@ export function getWelcomeTour(): Set<TourScriptStep> {
       content: (
         <>
           <p>
-            Electron Fiddle allows you to build little experiments and mini-apps
-            with Electron. Each Fiddle has at least three of these files: A main
-            script, a renderer script, a preload script, and an HTML file.
+            Tachybase Fiddle allows you to build little experiments and
+            mini-apps with Electron. Each Fiddle has at least three of these
+            files: A main script, a renderer script, a preload script, and an
+            HTML file.
           </p>
           <p>
             If you <code>require()</code> a module, Fiddle will install it
@@ -46,7 +47,7 @@ export function getWelcomeTour(): Set<TourScriptStep> {
       content: (
         <>
           <p>
-            Electron Fiddle knows about all released Electron versions,
+            Tachybase Fiddle knows about all released Electron versions,
             downloading your versions automatically in the background.
           </p>
           <p>
@@ -81,7 +82,7 @@ export function getWelcomeTour(): Set<TourScriptStep> {
           <p>
             Like what you&apos;ve built? You can save your Fiddle as a public
             GitHub Gist, allowing other users to load it by pasting the URL into
-            the address bar. If they don&apos;t have Electron Fiddle, they can
+            the address bar. If they don&apos;t have Tachybase Fiddle, they can
             see and download your code directly from GitHub.
           </p>
           <p>
@@ -97,7 +98,7 @@ export function getWelcomeTour(): Set<TourScriptStep> {
       title: '👋 Getting Started With Electron?',
       content: (
         <p>
-          We&apos;ve finished our tour of Electron Fiddle, but if this is your
+          We&apos;ve finished our tour of Tachybase Fiddle, but if this is your
           first time using Electron, we could introduce you to its basics.
           Interested?
         </p>
@@ -171,7 +172,7 @@ export function getWelcomeTour(): Set<TourScriptStep> {
           </p>
           <p>
             By the way: If you want to use an <code>npm</code> module here, just
-            &nbsp;<code>require</code> it. Electron Fiddle will automatically
+            &nbsp;<code>require</code> it. Tachybase Fiddle will automatically
             detect that you requested a module and install it as soon as you run
             your fiddle.
           </p>
@@ -182,7 +183,7 @@ export function getWelcomeTour(): Set<TourScriptStep> {
 }
 
 /**
- * The "Welcome to Electron Fiddle" Tour.
+ * The "Welcome to Tachybase Fiddle" Tour.
  */
 export const WelcomeTour = observer(
   class WelcomeTour extends React.Component<
@@ -251,7 +252,7 @@ export const WelcomeTour = observer(
               </div>
               <div className={Classes.DIALOG_BODY}>
                 <p>
-                  Welcome to Electron Fiddle! If you&apos;re new to the app,
+                  Welcome to Tachybase Fiddle! If you&apos;re new to the app,
                   we&apos;d like to give you a brief tour of its features.
                 </p>
                 <p>

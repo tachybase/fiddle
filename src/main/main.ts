@@ -210,7 +210,7 @@ export function main(argv_in: string[]) {
   }
 
   // Set the app's name
-  app.name = 'Electron Fiddle';
+  app.name = 'Tachybase Fiddle';
 
   // Ensure that there's only ever one Fiddle running
   listenForProtocolHandler();

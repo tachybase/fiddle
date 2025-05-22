@@ -6,11 +6,15 @@ import { observer } from 'mobx-react-lite';
 import { AppState } from '../state';
 
 export const MainViewer = observer(({ appState }: { appState: AppState }) => {
-  if (appState.engineStatus === 'ready' && appState.enginePort) {
+  console.log('🚀 ~ MainViewer ~ appState:', appState.enginePort);
+  if (
+    (appState.engineStatus === 'ready' || appState.engineStatus === 'remote') &&
+    appState.enginePort
+  ) {
     return (
       <webview
         id="mainView"
-        src={`http://127.0.0.1:${appState.enginePort}`}
+        src={appState.enginePort}
         style={{ width: '100%', height: '100%' }}
       />
     );
