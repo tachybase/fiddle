@@ -88,7 +88,7 @@ export class TachybaseEngine {
 
     await checkRunning();
 
-    this.child = spawn(enginePath, ['start'], {
+    this.child = spawn(enginePath, ['start', '--quickstart'], {
       cwd: workingDir,
       env,
       stdio: 'pipe',
