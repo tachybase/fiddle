@@ -116,7 +116,7 @@ export class TachybaseEngine {
   }
 
   async stop() {
-    if (this.engineStatus === 'ready') {
+    if (this.engineStatus === 'ready' || this.engineStatus === 'started') {
       this.child?.kill();
       this.engineStatus = 'stopped';
       ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);

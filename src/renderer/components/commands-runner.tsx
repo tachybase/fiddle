@@ -44,6 +44,9 @@ export const Runner = observer(
         case 'starting': {
           props.text = 'Starting';
           props.icon = <Spinner size={16} />;
+          props.onClick = () => {
+            window.ElectronFiddle.stopEngine();
+          };
           break;
         }
         default: {
