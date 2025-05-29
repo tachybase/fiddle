@@ -221,7 +221,13 @@ export function main(argv_in: string[]) {
   app.on('before-quit', onBeforeQuit);
   app.on('window-all-closed', onWindowsAllClosed);
   app.on('activate', () => {
-    app.whenReady().then(getOrCreateMainWindow);
+    app.whenReady().then(async () => {
+      const mainWindow = await getOrCreateMainWindow();
+      powerMonitor.on('lock-screen', () => {
+        mainWindow.webContents.send('lock-screen');
+      });
+      return mainWindow;
+    });
   });
 }
 
@@ -229,10 +235,3 @@ export function main(argv_in: string[]) {
 if (typeof module !== 'undefined' && require.main === module) {
   main(process.argv);
 }
-
-powerMonitor.on('lock-screen', () => {
-  const win = BrowserWindow.getAllWindows()[0];
-  if (process.env.LOGOUT_ON_LOCK === '1') {
-    win.webContents.send('lock-screen');
-  }
-});

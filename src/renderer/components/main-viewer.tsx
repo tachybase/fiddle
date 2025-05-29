@@ -6,12 +6,13 @@ import { observer } from 'mobx-react-lite';
 import { AppState } from '../state';
 
 export const MainViewer = observer(({ appState }: { appState: AppState }) => {
-  useEffect(() => {
-    window.ElectronFiddle?.onLockScreen(() => {
-      console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
-      window.location.href = '/signin';
-    });
-  }, []);
+  window.ElectronFiddle?.onLockScreen(() => {
+    console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
+    const webview = document.getElementById('mainView') as Electron.WebviewTag;
+    if (webview) {
+      webview.src = `http://127.0.0.1:${appState.enginePort}`;
+    }
+  });
 
   console.log('🚀 ~ MainViewer ~ appState:', appState.enginePort);
   if (
