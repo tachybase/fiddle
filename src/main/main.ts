@@ -4,6 +4,7 @@ import {
   IpcMainEvent,
   app,
   nativeTheme,
+  powerMonitor,
   systemPreferences,
 } from 'electron';
 
@@ -228,3 +229,10 @@ export function main(argv_in: string[]) {
 if (typeof module !== 'undefined' && require.main === module) {
   main(process.argv);
 }
+
+powerMonitor.on('lock-screen', () => {
+  const win = BrowserWindow.getAllWindows()[0];
+  if (process.env.LOGOUT_ON_LOCK === '1') {
+    win.webContents.send('lock-screen');
+  }
+});

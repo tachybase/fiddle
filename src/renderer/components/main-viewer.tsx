@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Spinner } from '@blueprintjs/core';
 import { observer } from 'mobx-react-lite';
@@ -6,6 +6,13 @@ import { observer } from 'mobx-react-lite';
 import { AppState } from '../state';
 
 export const MainViewer = observer(({ appState }: { appState: AppState }) => {
+  useEffect(() => {
+    window.ElectronFiddle?.onLockScreen(() => {
+      console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
+      window.location.href = '/signin';
+    });
+  }, []);
+
   console.log('🚀 ~ MainViewer ~ appState:', appState.enginePort);
   if (
     (appState.engineStatus === 'ready' || appState.engineStatus === 'remote') &&

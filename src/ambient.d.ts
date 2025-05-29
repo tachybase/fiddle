@@ -192,6 +192,7 @@ declare global {
       themePath: string;
       uncacheTypes(ver: RunnableVersion): Promise<void>;
       unwatchElectronTypes(): Promise<void>;
+      onLockScreen: (cb: () => void) => void;
     };
   }
 }
