@@ -70,11 +70,17 @@ export async function onReady() {
   // Do this after setting everything up to ensure that
   // any IPC listeners are set up before they're used
   mainIsReady();
-  await getOrCreateMainWindow();
+  const mainWindow = await getOrCreateMainWindow();
 
   new TachybaseEngine();
 
   processCommandLine(argv);
+
+  powerMonitor.on('lock-screen', () => {
+    ipcMainManager.send(IpcEvents.ENGINE_STDOUT, ['lock-screen']);
+    mainWindow.webContents.send('lock-screen');
+  });
+  return mainWindow;
 }
 
 /**
@@ -221,14 +227,7 @@ export function main(argv_in: string[]) {
   app.on('before-quit', onBeforeQuit);
   app.on('window-all-closed', onWindowsAllClosed);
   app.on('activate', () => {
-    app.whenReady().then(async () => {
-      const mainWindow = await getOrCreateMainWindow();
-      powerMonitor.on('lock-screen', () => {
-        ipcMainManager.send(IpcEvents.ENGINE_STDOUT, ['lock-screen']);
-        mainWindow.webContents.send('lock-screen');
-      });
-      return mainWindow;
-    });
+    app.whenReady().then(getOrCreateMainWindow);
   });
 }
 
