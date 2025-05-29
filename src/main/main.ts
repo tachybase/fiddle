@@ -224,6 +224,7 @@ export function main(argv_in: string[]) {
     app.whenReady().then(async () => {
       const mainWindow = await getOrCreateMainWindow();
       powerMonitor.on('lock-screen', () => {
+        ipcMainManager.send(IpcEvents.ENGINE_STDOUT, ['lock-screen']);
         mainWindow.webContents.send('lock-screen');
       });
       return mainWindow;

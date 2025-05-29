@@ -6,13 +6,27 @@ import { observer } from 'mobx-react-lite';
 import { AppState } from '../state';
 
 export const MainViewer = observer(({ appState }: { appState: AppState }) => {
-  window.ElectronFiddle?.onLockScreen(() => {
-    console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
-    const webview = document.getElementById('mainView') as Electron.WebviewTag;
-    if (webview) {
-      webview.src = `http://127.0.0.1:${appState.enginePort}`;
-    }
-  });
+  useEffect(() => {
+    const handler = () => {
+      console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
+      const webview = document.getElementById(
+        'mainView',
+      ) as Electron.WebviewTag;
+      if (webview) {
+        webview.src = `http://127.0.0.1:${appState.enginePort}/signin`;
+      } else {
+        console.warn('⚠️ webview not found!');
+      }
+    };
+
+    window.ElectronFiddle?.onLockScreen(handler);
+
+    // 可选：组件卸载时清理监听器（如果支持）
+    return () => {
+      // 假设支持取消监听，如：
+      // window.ElectronFiddle?.offLockScreen(handler);
+    };
+  }, [appState.enginePort]);
 
   console.log('🚀 ~ MainViewer ~ appState:', appState.enginePort);
   if (
