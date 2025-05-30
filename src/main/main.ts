@@ -77,7 +77,6 @@ export async function onReady() {
   processCommandLine(argv);
 
   powerMonitor.on('lock-screen', () => {
-    ipcMainManager.send(IpcEvents.ENGINE_STDOUT, ['lock-screen']);
     mainWindow.webContents.send('lock-screen');
   });
   return mainWindow;

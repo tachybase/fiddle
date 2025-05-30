@@ -13,7 +13,14 @@ export const MainViewer = observer(({ appState }: { appState: AppState }) => {
         'mainView',
       ) as Electron.WebviewTag;
       if (webview) {
-        webview.src = `http://127.0.0.1:${appState.enginePort}/signin`;
+        if (appState.enginePort) {
+          webview.src = `${appState.enginePort}/signin`;
+          webview.executeJavaScript(`
+            localStorage.removeItem('TACHYBASE_TOKEN');
+          `);
+        } else {
+          console.warn('⚠️ appState.enginePort is null!');
+        }
       } else {
         console.warn('⚠️ webview not found!');
       }
@@ -36,7 +43,7 @@ export const MainViewer = observer(({ appState }: { appState: AppState }) => {
     return (
       <webview
         id="mainView"
-        src={appState.enginePort}
+        src={`${appState.enginePort}/signin`}
         style={{ width: '100%', height: '100%' }}
       />
     );
