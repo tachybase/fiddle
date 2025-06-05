@@ -34,15 +34,19 @@ export const Commands = observer(
     };
 
     componentDidMount() {
-      window.addEventListener('keydown', this.handleKeyDown);
+      document.addEventListener('keydown', this.handleKeyDown);
     }
 
     componentWillUnmount() {
-      window.removeEventListener('keydown', this.handleKeyDown);
+      document.removeEventListener('keydown', this.handleKeyDown);
     }
 
     private handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+      const isInputFocused = ['INPUT', 'TEXTAREA'].includes(
+        (document.activeElement?.tagName || '').toUpperCase(),
+      );
+
+      if (!isInputFocused && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         this.setState((prevState: CommandsProps) => ({
           isTabbingHidden: !prevState.isTabbingHidden,
@@ -52,51 +56,53 @@ export const Commands = observer(
 
     public render() {
       const { appState } = this.props;
-      const { isBisectCommandShowing, title } = appState;
+      const { isBisectCommandShowing, title, isSettingsShowing } = appState;
       const { isTabbingHidden } = this.state as CommandsProps;
       return (
-        <div
-          className={classNames(
-            'commands',
-            { 'is-mac': window.ElectronFiddle.platform === 'darwin' },
-            { 'tabbing-hidden': isTabbingHidden },
-          )}
-          onDoubleClick={this.handleDoubleClick}
-        >
-          <div>
-            <ControlGroup fill={true} vertical={false}>
-              <Button
-                onClick={() => window.ElectronFiddle.reloadWindows()}
-                icon="repeat"
-                title="Reload Window"
-              />
-              <Button
-                icon="cog"
-                title="Setting"
-                onClick={appState.toggleSettings}
-              />
-            </ControlGroup>
-            <ControlGroup fill={true} vertical={false}>
-              <Runner appState={appState} />
-            </ControlGroup>
-            {isBisectCommandShowing && (
-              <ControlGroup fill={true} vertical={false}>
-                <BisectHandler appState={appState} />
-              </ControlGroup>
+        !isTabbingHidden && (
+          <div
+            className={classNames(
+              'commands',
+              { 'is-mac': window.ElectronFiddle.platform === 'darwin' },
+              { 'tabbing-hidden': isSettingsShowing },
             )}
-            <ControlGroup fill={true} vertical={false}>
-              <Button
-                active={appState.isConsoleShowing}
-                icon="console"
-                text="Console"
-                onClick={appState.toggleConsole}
-              />
-            </ControlGroup>
+            onDoubleClick={this.handleDoubleClick}
+          >
+            <div>
+              <ControlGroup fill={true} vertical={false}>
+                <Button
+                  onClick={() => window.ElectronFiddle.reloadWindows()}
+                  icon="repeat"
+                  title="Reload Window"
+                />
+                <Button
+                  icon="cog"
+                  title="Setting"
+                  onClick={appState.toggleSettings}
+                />
+              </ControlGroup>
+              <ControlGroup fill={true} vertical={false}>
+                <Runner appState={appState} />
+              </ControlGroup>
+              {isBisectCommandShowing && (
+                <ControlGroup fill={true} vertical={false}>
+                  <BisectHandler appState={appState} />
+                </ControlGroup>
+              )}
+              <ControlGroup fill={true} vertical={false}>
+                <Button
+                  active={appState.isConsoleShowing}
+                  icon="console"
+                  text="Console"
+                  onClick={appState.toggleConsole}
+                />
+              </ControlGroup>
+            </div>
+            {window.ElectronFiddle.platform === 'darwin' ? (
+              <div className="title">{title}</div>
+            ) : undefined}
           </div>
-          {window.ElectronFiddle.platform === 'darwin' ? (
-            <div className="title">{title}</div>
-          ) : undefined}
-        </div>
+        )
       );
     }
   },
