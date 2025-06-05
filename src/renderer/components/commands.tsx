@@ -10,6 +10,7 @@ import { AppState } from '../state';
 
 interface CommandsProps {
   appState: AppState;
+  isTabbingHidden?: boolean;
 }
 
 /**
@@ -20,6 +21,9 @@ export const Commands = observer(
   class Commands extends React.Component<CommandsProps> {
     constructor(props: CommandsProps) {
       super(props);
+      this.state = {
+        isTabbingHidden: true,
+      };
     }
 
     private handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,16 +33,33 @@ export const Commands = observer(
       }
     };
 
+    componentDidMount() {
+      window.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    private handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        this.setState((prevState: CommandsProps) => ({
+          isTabbingHidden: !prevState.isTabbingHidden,
+        }));
+      }
+    };
+
     public render() {
       const { appState } = this.props;
-      const { isBisectCommandShowing, title, isSettingsShowing } = appState;
-
+      const { isBisectCommandShowing, title } = appState;
+      const { isTabbingHidden } = this.state as CommandsProps;
       return (
         <div
           className={classNames(
             'commands',
             { 'is-mac': window.ElectronFiddle.platform === 'darwin' },
-            { 'tabbing-hidden': isSettingsShowing },
+            { 'tabbing-hidden': isTabbingHidden },
           )}
           onDoubleClick={this.handleDoubleClick}
         >
