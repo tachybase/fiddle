@@ -13,7 +13,7 @@ import { IpcEvents } from '../ipc-events';
  * enginePort 现在存的是完整的 url
  */
 export class TachybaseEngine {
-  private engineStatus = 'stopped';
+  private engineStatus = 'initialization';
   private enginePort = '';
   private child: ChildProcessWithoutNullStreams | null = null;
 

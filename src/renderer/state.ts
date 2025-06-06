@@ -174,7 +174,12 @@ export class AppState {
   public isDeletingAll = false;
 
   /// -- Engine --
-  public engineStatus: 'stopped' | 'ready' | 'starting' | 'remote' = 'stopped';
+  public engineStatus:
+    | 'stopped'
+    | 'initialization'
+    | 'ready'
+    | 'starting'
+    | 'remote' = 'stopped';
   public enginePort = '';
   public engineEnv =
     (localStorage.getItem(GlobalSetting.engineEnv) as string) ??

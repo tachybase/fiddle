@@ -16,10 +16,19 @@ export const Runner = observer(
   class Runner extends React.Component<RunnerProps> {
     public render() {
       const { engineStatus, engineEnv } = this.props.appState;
-
       const props: ButtonProps = { disabled: false };
 
       switch (engineStatus) {
+        case 'initialization': {
+          props.text = 'Stop';
+          try {
+            window.ElectronFiddle.startEngine(engineEnv);
+          } catch (err) {
+            this.props.appState.pushError(err.message, err);
+          }
+          props.icon = 'stop';
+          break;
+        }
         case 'stopped': {
           props.text = 'Run';
           props.onClick = async () => {
