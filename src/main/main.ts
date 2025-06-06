@@ -72,11 +72,12 @@ export async function onReady() {
   mainIsReady();
   const mainWindow = await getOrCreateMainWindow();
 
-  new TachybaseEngine();
+  const engine = new TachybaseEngine();
 
   processCommandLine(argv);
 
   powerMonitor.on('lock-screen', () => {
+    engine.sendChildMessage('lock-screen');
     mainWindow.webContents.send('lock-screen');
   });
   return mainWindow;
