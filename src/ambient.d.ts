@@ -1,3 +1,4 @@
+import { IpcRendererEvent } from 'electron';
 import * as MonacoType from 'monaco-editor';
 
 import {
@@ -57,6 +58,10 @@ declare global {
       addEventListener(
         type: 'engine-status-changed',
         listener: (status: string, port: string) => void,
+      ): void;
+      addEventListener(
+        type: 'power-monitor',
+        listener: (event: string) => void,
       ): void;
       addEventListener(
         type: 'engine-stdout',

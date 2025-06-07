@@ -4,6 +4,7 @@ import {
   IpcMainEvent,
   app,
   nativeTheme,
+  powerMonitor,
   systemPreferences,
 } from 'electron';
 
@@ -60,6 +61,7 @@ export async function onReady() {
   setupThemes();
   setupIsDevMode();
   setupNpm();
+  setupPowerMonitor();
   const knownVersions = await setupVersions();
   setupGetProjectName();
   setupGetUsername();
@@ -74,6 +76,16 @@ export async function onReady() {
   new TachybaseEngine();
 
   processCommandLine(argv);
+}
+
+const POWER_MONITOR_EVENTS = ['lock-screen', 'unlock-screen'];
+
+export function setupPowerMonitor() {
+  POWER_MONITOR_EVENTS.forEach((event) => {
+    powerMonitor.on(event as any, () => {
+      ipcMainManager.send(IpcEvents.POWER_MONITOR, [event]);
+    });
+  });
 }
 
 /**
