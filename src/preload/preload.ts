@@ -269,22 +269,6 @@ export async function setupFiddleGlobal() {
     async unwatchElectronTypes() {
       await ipcRenderer.invoke(IpcEvents.UNWATCH_ELECTRON_TYPES);
     },
-    addIpcRenderListener: (
-      channel: string,
-      callback: (channel: string) => void,
-    ) => {
-      ipcRenderer.on(channel, () => {
-        callback(channel);
-      });
-    },
-    removeIpcRenderListener: (
-      channel: string,
-      callback: (channel: string) => void,
-    ) => {
-      ipcRenderer.off(channel, () => {
-        callback(channel);
-      });
-    },
   });
 }
 
