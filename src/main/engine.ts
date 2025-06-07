@@ -59,7 +59,9 @@ export class TachybaseEngine {
         'ENGINE_PATH, ENGINE_WORKING_DIR, and APP_PORT must be set',
       );
     }
-    remoteUrl = `http://localhost:${appPort}`;
+    if (!remoteUrl) {
+      remoteUrl = `http://localhost:${appPort}`;
+    }
 
     env.NODE_MODULES_PATH = path.join(workingDir, 'plugins/node_modules');
 
