@@ -61,6 +61,7 @@ export async function onReady() {
   setupThemes();
   setupIsDevMode();
   setupNpm();
+  setupPowerMonitor();
   const knownVersions = await setupVersions();
   setupGetProjectName();
   setupGetUsername();
@@ -70,16 +71,21 @@ export async function onReady() {
   // Do this after setting everything up to ensure that
   // any IPC listeners are set up before they're used
   mainIsReady();
-  const mainWindow = await getOrCreateMainWindow();
+  await getOrCreateMainWindow();
 
   new TachybaseEngine();
 
   processCommandLine(argv);
+}
 
-  powerMonitor.on('lock-screen', () => {
-    mainWindow.webContents.send('lock-screen');
+const POWER_MONITOR_EVENTS = ['lock-screen', 'unlock-screen'];
+
+export function setupPowerMonitor() {
+  POWER_MONITOR_EVENTS.forEach((event) => {
+    powerMonitor.on(event as any, () => {
+      ipcMainManager.send(IpcEvents.POWER_MONITOR, [event]);
+    });
   });
-  return mainWindow;
 }
 
 /**

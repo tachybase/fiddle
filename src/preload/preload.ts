@@ -59,6 +59,7 @@ const channelMapping: Record<FiddleEvent, IpcEvents> = {
   'engine-started': IpcEvents.ENGINE_STARTED,
   'engine-stdout': IpcEvents.ENGINE_STDOUT,
   'engine-stderr': IpcEvents.ENGINE_STDERR,
+  'power-monitor': IpcEvents.POWER_MONITOR,
 } as const;
 
 async function preload() {

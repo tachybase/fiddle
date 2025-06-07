@@ -193,6 +193,7 @@ export type FiddleEvent =
   | 'open-settings'
   | 'open-template'
   | 'package-fiddle'
+  | 'power-monitor'
   | 'redo-in-editor'
   | 'run-fiddle'
   | 'save-fiddle-gist'

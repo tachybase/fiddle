@@ -60,6 +60,10 @@ declare global {
         listener: (status: string, port: string) => void,
       ): void;
       addEventListener(
+        type: 'power-monitor',
+        listener: (event: string) => void,
+      ): void;
+      addEventListener(
         type: 'engine-stdout',
         listener: (data: string) => void,
       ): void;
@@ -193,14 +197,6 @@ declare global {
       themePath: string;
       uncacheTypes(ver: RunnableVersion): Promise<void>;
       unwatchElectronTypes(): Promise<void>;
-      addIpcRenderListener: (
-        channel: string,
-        cb: (channel: string) => void,
-      ) => void;
-      removeIpcRenderListener: (
-        channel: string,
-        cb: (channel: string) => void,
-      ) => void;
     };
   }
 }
