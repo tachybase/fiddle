@@ -26,7 +26,7 @@ jest.mock('../../src/main/ipc');
 
 describe('menu', () => {
   beforeEach(() => {
-    electron.app.name = 'Electron Fiddle';
+    electron.app.name = 'Tachybase Fiddle';
     mocked(electron.dialog.showOpenDialog).mockResolvedValue({} as any);
   });
 
