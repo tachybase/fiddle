@@ -7,33 +7,27 @@ import { AppState } from '../state';
 
 export const MainViewer = observer(({ appState }: { appState: AppState }) => {
   useEffect(() => {
-    const handler = () => {
-      console.log('[系统事件] 收到 lock-screen, 跳转到 /signin');
+    const lockScreenChannel = 'lock-screen';
+    const handler = (channel: string) => {
       const webview = document.getElementById(
         'mainView',
       ) as Electron.WebviewTag;
       if (webview) {
-        if (appState.enginePort) {
-          webview.src = `${appState.enginePort}/signin`;
-          webview.executeJavaScript(`
-            localStorage.removeItem('TACHYBASE_TOKEN');
-          `);
-        } else {
-          console.warn('⚠️ appState.enginePort is null!');
-        }
+        webview.executeJavaScript(`
+          window.postMessage('${channel}', '*');
+        `);
       } else {
         console.warn('⚠️ webview not found!');
       }
     };
-
-    window.ElectronFiddle?.onLockScreen(handler);
-
-    // 可选：组件卸载时清理监听器（如果支持）
+    window.ElectronFiddle?.addIpcRenderListener(lockScreenChannel, handler);
     return () => {
-      // 假设支持取消监听，如：
-      // window.ElectronFiddle?.offLockScreen(handler);
+      window.ElectronFiddle?.removeIpcRenderListener(
+        lockScreenChannel,
+        handler,
+      );
     };
-  }, [appState.enginePort]);
+  }, []);
 
   console.log('🚀 ~ MainViewer ~ appState:', appState.enginePort);
   if (

@@ -1,3 +1,4 @@
+import { IpcRendererEvent } from 'electron';
 import * as MonacoType from 'monaco-editor';
 
 import {
@@ -192,7 +193,14 @@ declare global {
       themePath: string;
       uncacheTypes(ver: RunnableVersion): Promise<void>;
       unwatchElectronTypes(): Promise<void>;
-      onLockScreen: (cb: () => void) => void;
+      addIpcRenderListener: (
+        channel: string,
+        cb: (channel: string) => void,
+      ) => void;
+      removeIpcRenderListener: (
+        channel: string,
+        cb: (channel: string) => void,
+      ) => void;
     };
   }
 }

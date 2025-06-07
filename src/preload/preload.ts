@@ -268,10 +268,20 @@ export async function setupFiddleGlobal() {
     async unwatchElectronTypes() {
       await ipcRenderer.invoke(IpcEvents.UNWATCH_ELECTRON_TYPES);
     },
-    onLockScreen: (callback: () => void) => {
-      ipcRenderer.on('lock-screen', () => {
-        console.log('[preload] 转发 lock-screen 到渲染进程');
-        callback();
+    addIpcRenderListener: (
+      channel: string,
+      callback: (channel: string) => void,
+    ) => {
+      ipcRenderer.on(channel, () => {
+        callback(channel);
+      });
+    },
+    removeIpcRenderListener: (
+      channel: string,
+      callback: (channel: string) => void,
+    ) => {
+      ipcRenderer.off(channel, () => {
+        callback(channel);
       });
     },
   });
