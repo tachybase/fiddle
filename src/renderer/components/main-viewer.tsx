@@ -37,7 +37,7 @@ export const MainViewer = observer(({ appState }: { appState: AppState }) => {
     return (
       <webview
         id="mainView"
-        src={`${appState.enginePort}/signin`}
+        src={appState.enginePort}
         style={{ width: '100%', height: '100%' }}
       />
     );
