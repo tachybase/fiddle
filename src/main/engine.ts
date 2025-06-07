@@ -125,4 +125,8 @@ export class TachybaseEngine {
       ipcMainManager.send(IpcEvents.ENGINE_STATUS_CHANGED, ['stopped']);
     }
   }
+
+  sendChildMessage(message: string) {
+    this.child?.stdin.write(message);
+  }
 }

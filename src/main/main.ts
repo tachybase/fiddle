@@ -4,6 +4,7 @@ import {
   IpcMainEvent,
   app,
   nativeTheme,
+  powerMonitor,
   systemPreferences,
 } from 'electron';
 
@@ -69,11 +70,17 @@ export async function onReady() {
   // Do this after setting everything up to ensure that
   // any IPC listeners are set up before they're used
   mainIsReady();
-  await getOrCreateMainWindow();
+  const mainWindow = await getOrCreateMainWindow();
 
-  new TachybaseEngine();
+  const engine = new TachybaseEngine();
 
   processCommandLine(argv);
+
+  powerMonitor.on('lock-screen', () => {
+    engine.sendChildMessage('lock-screen');
+    mainWindow.webContents.send('lock-screen');
+  });
+  return mainWindow;
 }
 
 /**
